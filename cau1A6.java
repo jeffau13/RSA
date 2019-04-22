@@ -9,6 +9,37 @@ import java.math.BigInteger;
 public class cau1A6 {
 
     public static void main(String[] args) {
+        BigInteger p;
+        BigInteger q;
+        BigInteger n;
+        BigInteger phi;
+        BigInteger e;
+        BigInteger d;
+        int bitLen = 2048;
+        Random r;
+        r = new Random();
+        // p = prime 1
+        p = BigInteger.probablePrime(bitLen, r);
+        // q = prime 2
+        q = BigInteger.probablePrime(bitLen, r);
+        // n = p * q
+        n = p.multiply(q);
+        // phi = totient(n) = (prime1-1)*(prime2-1)
+        phi = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+        e = BigInteger.probablePrime(bitLen / 2, r);
+
+        while (phi.gcd(e).compareTo(BigInteger.ONE) > 0 && e.compareTo(phi) < 0) {
+            e.add(BigInteger.ONE);
+        }
+
+        d = e.modInverse(phi);
+
+        String plain = "This is the last assignment";
+        System.out.println("Plaintext to Encrypt:" + plain);
+        byte[] encrypted = encryption(e, n, plain);
+        System.out.println("Encrypted ciphertext: " + byteArrayToString(encrypted));
+        String decrypted = decryption(d, n, encrypted);
+        System.out.println("Decrypted :" + decrypted);
 
     }
 
@@ -36,7 +67,4 @@ public class cau1A6 {
         return str;
     }
 
-    public class keyGeneration {
-
-    }
 }
