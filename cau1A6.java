@@ -9,13 +9,14 @@ import java.math.BigInteger;
 public class cau1A6 {
 
     public static void main(String[] args) {
+        // keyGeneration:
         BigInteger p;
         BigInteger q;
         BigInteger n;
         BigInteger phi;
         BigInteger e;
         BigInteger d;
-        int bitLen = 2048;
+        int bitLen = 512;
         Random r;
         r = new Random();
         // p = prime 1
@@ -35,11 +36,24 @@ public class cau1A6 {
         d = e.modInverse(phi);
 
         String plain = "This is the last assignment";
-        System.out.println("Plaintext to Encrypt:" + plain);
+
+        System.out.println("Plaintext string to encrypt: " + plain);
+        System.out.println("------------------------------------");
+        System.out.println("Public Key e: " + e);
+        System.out.println("------------------------------------");
+        System.out.println("n: " + n);
+        System.out.println("------------------------------------");
+
         byte[] encrypted = encryption(e, n, plain);
+
         System.out.println("Encrypted ciphertext: " + byteArrayToString(encrypted));
+        System.out.println("------------------------------------");
+        System.out.println("Private Key d: " + d);
+        System.out.println("------------------------------------");
+
         String decrypted = decryption(d, n, encrypted);
-        System.out.println("Decrypted :" + decrypted);
+
+        System.out.println("Decrypted plaintext string :" + decrypted);
 
     }
 
